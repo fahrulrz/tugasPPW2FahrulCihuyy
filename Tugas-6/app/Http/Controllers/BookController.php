@@ -79,5 +79,11 @@ class BookController extends Controller
         return redirect()->route('index')->with('success', 'Buku berhasil diperbarui');
     }
     
+    public function destroy($id) {
+        $book = Book::findOrFail($id);
+        $book->delete();
+
+        return redirect('/');
+    }
 
 }
