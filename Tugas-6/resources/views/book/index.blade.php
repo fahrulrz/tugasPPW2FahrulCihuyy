@@ -15,6 +15,8 @@
         </div>
     @endif
 
+    @yield('content')
+
 
     <table class="table">
         <thead>
@@ -35,27 +37,23 @@
               <td> {{$book->penulis}} </td>
               <td> {{"Rp. ".number_format($book->harga, 2, ",", ".")}} </td>
               <td> {{$book->tgl_terbit->format('d/m/Y')}} </td>
-              <td>  </td>
-              <td>
-                <a href="{{ route('book.edit', $book->id) }}" class="btn btn-warning">Edit</a>
-              </td>
-              <td>
-                <form action="{{ route('book.destroy', $book->id) }}" method="POST">
-                  @csrf
-                  @method('DELETE')
-                  <button onclick="return confirm('Yakin mau di hapus')" type="submit" class="btn btn-danger">Hapus</button>
-                </form>
-              </td>
+              <td> <form action="{{ route('book.destroy', $book->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button onclick="return confirm('Yakin mau di hapus')" type="submit" class="btn btn-danger">Hapus</button>
+              </form> 
+              <a href="{{ route('book.edit', $book->id) }}" class="btn btn-warning">Edit</a>
+            </td>
             
             </tr>
             @endforeach
             <tr>
-                <td colspan="3" class="table-success" style="text-align: center; font-weight: bold">Jumlah Buku</td>
-                <td class="table-primary" style="font-weight: bold">{{$jumlahBuku}}</td>
+                <td colspan="4" class="table-success" style="text-align: center; font-weight: bold">Jumlah Buku</td>
+                <td colspan="2" class="table-primary" style="font-weight: bold">{{$jumlahBuku}}</td>
             </tr>
             <tr>
-                <td colspan="3" class="table-primary" style="text-align: center; font-weight: bold">Total Harga</td>
-                <td class="table-success" style="font-weight: bold">{{"Rp. ".number_format($totalHarga, 2, ",", ".")}}</td>
+                <td colspan="4" class="table-primary" style="text-align: center; font-weight: bold">Total Harga</td>
+                <td colspan="2" class="table-success" style="font-weight: bold">{{"Rp. ".number_format($totalHarga, 2, ",", ".")}}</td>
             </tr>
         </tbody>
       </table>

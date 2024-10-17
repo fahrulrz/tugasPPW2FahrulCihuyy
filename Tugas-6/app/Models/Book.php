@@ -20,4 +20,8 @@ class Book extends Model
         'harga',
         'tgl_terbit',
     ];
+
+    protected $dates = [
+        'tgl_terbit',
+    ];
 }

@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+// use App\Http\Controllers\Auth\LoginRegisterController;
+use App\Http\Middleware\LoginRegisterController;
 
-Route::get('/', [BookController::class, 'index'])->name('index');
+Route::get('/', [BookController::class, 'index'])->name('index')->middleware('auth');
 
 // Menambahkan buku dengan input manual
 Route::post('/addManualBook', [BookController::class, 'addManualBook'])->name('book.addManualBook');
@@ -19,3 +21,13 @@ Route::post('/updateBook/{id}', [BookController::class, 'update'])->name('book.u
 
 // Menghapus buku
 Route::delete('/deleteBook/{id}', [BookController::class, 'destroy'])->name('book.destroy');
+
+
+Route::controller(LoginRegisterController::class)->group(function () {
+    Route::get('/register', 'register')->name('register')->middleware('guest');
+    Route::post('/store', 'store')->name('store')->middleware('auth');
+    Route::get('/login', 'login')->name('login')->middleware('guest');
+    Route::post('/authenticate', 'authenticate')->name('authenticate');
+    Route::get('/dashboard', 'dashboard')->name('dashboard')->middleware('auth');
+    Route::post('/logout', 'logout')->name('logout')->middleware('auth');
+});

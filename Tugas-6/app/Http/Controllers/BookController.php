@@ -46,7 +46,7 @@ class BookController extends Controller
         ]);
         return redirect()->route('index')->with('success', 'Buku acak ditambahkan');
     }
-
+    
     //Mengedit data
     public function edit($id) {
         // Ambil buku berdasarkan ID
@@ -83,7 +83,7 @@ class BookController extends Controller
         $book = Book::findOrFail($id);
         $book->delete();
 
-        return redirect('/');
+        return redirect()->route('index')->with('success', 'Buku berhasil dihapus');
     }
 
 }
