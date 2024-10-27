@@ -15,7 +15,6 @@
                 <div class="alert alert-success">
                     You are logged in!
                 </div>
-                    
                 @endif
             </div>
         </div>
