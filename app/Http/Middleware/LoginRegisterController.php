@@ -11,11 +11,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LoginRegisterController
 {
-    // public function __construct() {
-    //     $this->middleware('guest')->except([
-    //         'logout', 'dashboard'
-    //     ]);
-    // }
 
     public function register() {
         return view('auth.register');
@@ -26,14 +21,24 @@ class LoginRegisterController
             'name'=>'required|string|max:250',
             'email'=>'required|email|max:250|unique:users',
             'role'=>'required',
-            'password'=>'required|min:2|confirmed'
+            'password'=>'required|min:2|confirmed',
+            'photo' => 'image|nullable|max:1999'
         ]);
+
+        if ($request->hasFile('photo')) {
+            $filenameWithExt = $request->file('photo')->getClientoriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('photo')->getClientOriginalExtension();
+            $filenameSimpan = $filename . '_' . time() . '.' . $extension;
+            $path = $request->file('photo')->storeAs('images', $filenameSimpan, 'public');
+        }
 
         User::create([
             'name'=>$request->name,
             'email'=>$request->email,
             'role' => $request->role,
-            'password'=>Hash::make($request->password)
+            'password'=>Hash::make($request->password),
+            'photo' => $path
         ]);
 
         $credentials = $request->only('email', 'password');

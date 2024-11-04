@@ -28,26 +28,22 @@ class LoginRegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:8|confirmed',
-            'photo' => 'image|mimes:png,jpg,jpeg|max:1999'
+            'photo' => 'image|nullable|max:1999'
         ]);
 
-        $fileNameToStore = null;
-
         if ($request->hasFile('photo')) {
-            $filenameWithExt = $request->file('photo')->getClientOriginalName();
+            $filenameWithExt = $request->file('photo')->getClientoriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('photo')->getClientOriginalExtension();
-            $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-
-            // Simpan file foto ke direktori 'public/images'
-            $path = $request->file('photo')->storeAs('images', $fileNameToStore, 'public');
+            $filenameSimpan = $filename . '_' . time() . '.' . $extension;
+            $path = $request->file('photo')->storeAs('images', $filenameSimpan);
         }
 
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'photo' => $fileNameToStore
+            'photo' => $path
         ]);
 
         $credentials = $request->only('email', 'password');

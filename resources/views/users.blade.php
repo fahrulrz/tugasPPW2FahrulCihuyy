@@ -19,14 +19,11 @@
                     @endif
                 </td>
                 <td>
-                    <button>
-                        Edit
-                    </button>
+                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Edit</a>
                     <form action="{{ route('users.destroy', $user->id) }}" method="POST">
                         @method('DELETE')
                         {{ csrf_field() }} <br>
                         <button type="submit" class="btn btn-danger">Delete</button>
-
                     </form>
                 </td>
             </tr>

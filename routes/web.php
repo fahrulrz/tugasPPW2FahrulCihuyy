@@ -40,3 +40,5 @@ Route::controller(LoginRegisterController::class)->group(function () {
 
 Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
+Route::post('/users/{id}', [UserController::class, 'update'])->name('users.update');
