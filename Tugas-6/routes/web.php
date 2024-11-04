@@ -2,10 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 // use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Middleware\LoginRegisterController;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', [BookController::class, 'index'])->name('index')->middleware('auth');
+
+Route::get('/welcome', function(){
+    return view('welcome');
+});
 
 // Menambahkan buku dengan input manual
 Route::post('/addManualBook', [BookController::class, 'addManualBook'])->name('book.addManualBook');
@@ -25,9 +31,12 @@ Route::delete('/deleteBook/{id}', [BookController::class, 'destroy'])->name('boo
 
 Route::controller(LoginRegisterController::class)->group(function () {
     Route::get('/register', 'register')->name('register')->middleware('guest');
-    Route::post('/store', 'store')->name('store')->middleware('auth');
+    Route::post('/store', 'store')->name('store');
     Route::get('/login', 'login')->name('login')->middleware('guest');
     Route::post('/authenticate', 'authenticate')->name('authenticate');
-    Route::get('/dashboard', 'dashboard')->name('dashboard')->middleware('auth');
+    Route::get('/dashboard', 'dashboard')->name('dashboard')->middleware(['auth', 'admin']);
     Route::post('/logout', 'logout')->name('logout')->middleware('auth');
 });
+
+Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
