@@ -2,8 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 // use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Middleware\LoginRegisterController;
+use Illuminate\Support\Facades\Storage;
 
 Route::get('/', [BookController::class, 'index'])->name('index')->middleware('auth');
 
@@ -35,3 +37,6 @@ Route::controller(LoginRegisterController::class)->group(function () {
     Route::get('/dashboard', 'dashboard')->name('dashboard')->middleware(['auth', 'admin']);
     Route::post('/logout', 'logout')->name('logout')->middleware('auth');
 });
+
+Route::get('/users', [UserController::class, 'index'])->name('users');
+Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
