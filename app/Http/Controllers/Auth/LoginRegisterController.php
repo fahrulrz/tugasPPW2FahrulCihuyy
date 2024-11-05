@@ -22,7 +22,6 @@ class LoginRegisterController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->file('photo'));
 
         $request->validate([
             'name' => 'required|max:255',

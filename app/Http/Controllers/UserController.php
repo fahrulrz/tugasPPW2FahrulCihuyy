@@ -26,7 +26,6 @@ class UserController extends Controller
         try {
             if (File::exists($file)) {
                 File::delete($file);
-                $user->delete();
             }
         } catch (\Throwable $th) {
             
@@ -50,8 +49,6 @@ class UserController extends Controller
             if ($user->photo) {
                 Storage::disk('public')->delete('images/'. $user->photo);
             }
-
-
             // menyimpan file baru
             $filenameWithExt = $request->file('photo')->getClientoriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
