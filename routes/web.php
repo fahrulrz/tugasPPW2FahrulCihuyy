@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\UserController;
 // use App\Http\Controllers\Auth\LoginRegisterController;
 use App\Http\Middleware\LoginRegisterController;
@@ -42,3 +43,10 @@ Route::get('/users', [UserController::class, 'index'])->name('users');
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 Route::get('/users/edit/{id}', [UserController::class, 'edit'])->name('users.edit');
 Route::post('/users/{id}', [UserController::class, 'update'])->name('users.update');
+
+
+Route::resource('gallery', GalleryController::class);
+Route::get('/create', [GalleryController::class, 'create'])->name('gallery.create');
+Route::get('/edit/{id}', [GalleryController::class, 'edit'])->name('gallery.edit');
+Route::post('/upadate/{id}', [GalleryController::class, 'update'])->name('gallery.update');
+Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
