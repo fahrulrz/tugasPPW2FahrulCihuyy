@@ -9,9 +9,12 @@
 </head>
 
 <body>
-    <h3>{{ $data['name'] }}</h3>
-    <h3>{{ $data['body'] }}</h3>
-    <p>Terima Kasih</p>
+    <h3>Nama Peregister : {{ $data['name'] }}</h3>
+    <h3>Email Peregister : {{ $data['subject'] }}</h3>
+    <h3>Dibuat saat : {{ $data['body'] }}</h3>
+
+
+
 </body>
 
 </html>

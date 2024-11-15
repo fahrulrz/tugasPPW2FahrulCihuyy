@@ -35,11 +35,10 @@ class SendEmailController extends Controller
         $content = [
             'name' => $name,
             'subject' => $email,
-            'body' => $name. ' ' .$email. ' ' .$user->created_at,
-
+            'body' => $user->created_at,
         ];  
 
-        Mail::to('mfahrulrazi695@gmail.com')->send(new SendEmail($content));
+        Mail::to('mfahrulrazi695@gmail.com')->send(new SendEmail($content)); 
         return redirect()->route('dashboard')->with('success', 'Email Berhasil Dikirim');
     }
 }

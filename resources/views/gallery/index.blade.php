@@ -32,7 +32,7 @@
                     <div class="d-flex">
                         {{ $galleries->links() }}
                     </div>
-                    <a class="btn btn-primary" href="{{ route('gallery.create') }}">Tambah Gallery</a>
+                    <a class="btn btn-primary my-4" href="{{ route('gallery.create') }}">Tambah Gallery</a>
                 </div>
             </div>
         </div>

@@ -17,7 +17,6 @@
                 </div>
                 @endif
             </div>
-            <a class="nav-link " href="{{ route('users') }}">Users</a>
         </div>
     </div>
 </div>
