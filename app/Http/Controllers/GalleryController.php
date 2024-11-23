@@ -6,11 +6,102 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use Illuminate\Support\Facades\File;
 
+/**
+ * @OA\Info(
+ *     description="Contoh API doc menggunakan OpenAPI/Swagger",
+ *     version="0.0.1",
+ *     title="Contoh API documentation gallery",
+ *     termsOfService="http://swagger.io/terms/",
+ *     @OA\Contact(
+ *         email="muhamadfahrulrazi@mail.ugm.ac.id"
+ *     ),
+ *     @OA\License(
+ *         name="Apache 2.0",
+ *         url="http://www.apache.org/licenses/LICENSE-2.0.html"
+ *     )
+ * )
+ */
+
 class GalleryController extends Controller
 {
+
+
     /**
-     * Display a listing of the resource.
-     */
+ * @OA\Post(
+ *     path="/api/gallery",
+ *     tags={"gallery"},
+ *     summary="Upload gallery image",
+ *     description="Upload an image along with title and description",
+ *     operationId="uploadGallery",
+ *     @OA\RequestBody(
+ *         required=true,
+ *         @OA\MediaType(
+ *             mediaType="multipart/form-data",
+ *             @OA\Schema(
+ *                  required = {"title", "description", "file"},
+ *                  @OA\Property(
+ *                      property = "title",
+ *                      type="string",
+ *                      description="judul",
+ *                      example="ines"
+ *                  ),
+ *                  @OA\Property(
+ *                      property = "description",
+ *                      type="string",
+ *                      description="deskripsi",
+ *                      example="alamak"
+ *                  ),
+ *                  @OA\Property(
+ *                      property = "file",
+ *                      type="string",
+ *                      format="binary",
+ *                      description="gambar"
+ *                  )
+ *             )
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="successful operation",
+ *         @OA\JsonContent(
+ *             example={
+ *                 "success": true,
+ *                 "message": "Berhasil menambahkan gambar",
+ *                 "data": {
+ *                     "output": "halo nama file deskripsi gambar",
+ *                     "title": "judul",
+ *                     "description": "alamak",
+ *                     "file": "gambar"
+ *                 }
+ *             }
+ *         )
+ *     )
+ * )
+ */
+
+
+    public function gallery(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'file' => 'required|file|mimes:jpg,jpeg,png|max:2048',
+        ]);
+    
+        // Simpan file ke direktori
+        $filePath = $request->file('file')->store('uploads', 'public');
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil menambahkan gambar',
+            'data' => [
+                'title' => $request->title,
+                'description' => $request->description,
+                'file' => $filePath,
+            ],
+        ]);
+    }
+
     public function index()
     {
         $data = array(
