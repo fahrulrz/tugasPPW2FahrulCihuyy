@@ -10,7 +10,7 @@ class GreetController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/greetttt",
+     *     path="/api/greet",
      *     tags={"greetinggggg"},
      *     summary="Returns a Sample API response",
      *     description="A sample greeting to test out the API",

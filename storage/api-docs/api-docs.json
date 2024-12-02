@@ -76,7 +76,7 @@
                 }
             }
         },
-        "/api/greetttt": {
+        "/api/greet": {
             "get": {
                 "tags": [
                     "greetinggggg"
