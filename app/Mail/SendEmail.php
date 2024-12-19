@@ -19,41 +19,48 @@ class SendEmail extends Mailable
      */
     public function __construct(array $data)
     {
+        // digunakan untuk menginisialisasi objek yang digunakan pada template email.
         $this->data = $data;
     }
 
     public function build()
     {
-        return $this->subject($this->data['subject'])->view('email.sendemail');
+         // digunakan untuk mengatur struktur email yang lebih spesifik seperti melakukan konfigurasi pengirim email,
+        // menampilkan template email dan menambahkan attachment.
+        if ($this->data['subject'] == 'Registration Successful') {
+            return $this->subject($this->data['subject'])->view('emails.registerEmail');
+        } else {
+            return $this->subject($this->data['subject'])->view('emails.formEmail');
+        }
     }
 
-    /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Send Email',
-        );
-    }
+    // /**
+    //  * Get the message envelope.
+    //  */
+    // public function envelope(): Envelope
+    // {
+    //     return new Envelope(
+    //         subject: 'Send Email',
+    //     );
+    // }
 
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'emails.sendemail',
-        );
-    }
+    // /**
+    //  * Get the message content definition.
+    //  */
+    // public function content(): Content
+    // {
+    //     return new Content(
+    //         view: 'emails.sendemail',
+    //     );
+    // }
 
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
+    // /**
+    //  * Get the attachments for the message.
+    //  *
+    //  * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+    //  */
+    // public function attachments(): array
+    // {
+    //     return [];
+    // }
 }

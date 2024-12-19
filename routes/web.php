@@ -54,6 +54,6 @@ Route::post('/upadate/{id}', [GalleryController::class, 'update'])->name('galler
 Route::delete('/gallery/{id}', [GalleryController::class, 'destroy'])->name('gallery.destroy');
 
 
-Route::get('/send-email', [SendEmailController::class, 'index'])->name('kirim-email');
-Route::post('/post-email', [SendEmailController::class, 'store'])->name('post-email');
-Route::get('/send-email/send/{email}/{name}', [SendEmailController::class, 'send'])->name('send-email.send');
+// Route::get('/send-email', [SendEmailController::class, 'index'])->name('kirim-email');
+Route::post('/post-email', [SendEmailController::class, 'store'])->name('post.email');
+// Route::get('/send-email/send/{email}/{name}', [SendEmailController::class, 'send'])->name('send-email.send');

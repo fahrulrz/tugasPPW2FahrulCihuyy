@@ -9,7 +9,7 @@
                 {{ session('status') }}
             </div>
         @endif
-        <form action="{{ route('post-email') }}" method="post">
+        <form action="{{ route('post.email') }}" method="post">
             @csrf
             <div class="form-group">
                 <label for="name">Nama</label>
