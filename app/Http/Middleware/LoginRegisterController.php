@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Jobs\SendMailJob;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginRegisterController
@@ -41,13 +42,20 @@ class LoginRegisterController
             'photo' => $path
         ]);
 
-        $credentials = $request->only('email', 'password');
-        Auth::attempt($credentials);
-        $request->session()->regenerate();
-        return redirect()->route('send-email.send', [
-            'email'=>$request->email,
-            'name'=>$request->name
-        ]);
+        $credentials = $request->only('email', 'password'); //! Baris ini mengambil hanya email dan password dari request untuk digunakan sebagai kredensial saat mencoba untuk login. Fungsi only memastikan bahwa hanya data yang diperlukan yang diambil, yang membantu mencegah kebocoran data sensitif.
+        Auth::attempt($credentials); //! Fungsi ini mencoba untuk melakukan login dengan menggunakan kredensial yang telah disiapkan. Jika login berhasil, sesi pengguna akan dimulai, dan pengguna akan dianggap terautentikasi.
+        $request->session()->regenerate();  //! Setelah berhasil login, sesi pengguna diatur ulang. Ini penting untuk mencegah serangan "session fixation," di mana penyerang mencoba untuk menggunakan sesi yang sudah ada untuk mendapatkan akses. Dengan mengatur ulang sesi, Laravel membuat sesi baru untuk pengguna yang baru saja login.
+
+        // Kirim email konfirmasi register
+        $registerEmail = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'subject' => 'Register Success'
+        ];
+
+        dispatch(new SendMailJob($registerEmail));
+
+        return redirect()->route('dashboard')->withSuccess('You have successfully registered & logged in!');
     }
 
     public function login() {

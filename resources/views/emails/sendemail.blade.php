@@ -13,8 +13,6 @@
     <h3>Email Peregister : {{ $data['subject'] }}</h3>
     <h3>Dibuat saat : {{ $data['body'] }}</h3>
 
-
-
 </body>
 
 </html>
