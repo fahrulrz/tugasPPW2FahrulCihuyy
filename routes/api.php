@@ -16,3 +16,5 @@ Route::get('/info', [InfoCOntroller::class, 'index'])->name('info');
 Route::get('/greet', [GreetController::class, 'greet'])->name('greet');
 
 Route::post('gallery', [GalleryController::class, 'gallery'])->name('gallery');
+
+Route::get('/gallery', [GalleryController::class, 'indexapi']);
